@@ -29,6 +29,7 @@ int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
     size_t k, m;
     size_t b, a;
     size_t i, j;
+    int possibly_prime;
 
     nm = n - 1;
 
@@ -40,7 +41,6 @@ int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
     }
 
     i = 0;
-    test_loop:
     while (i < test_cnt) {
         if (test_a) {
             a = test_a[i];
@@ -55,9 +55,10 @@ int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
         }
         if (b == 1 || b == nm) {
             i++;
-            goto test_loop;
+            continue;
         }
 
+        possibly_prime = 0;
         for (j = 0; j < k; j++) {
             b = (b * b) % n;
 
@@ -66,8 +67,12 @@ int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
             }
             if (b == nm) {
                 i++;
-                goto test_loop;
+                possibly_prime = 1;
+                break;
             }
+        }
+        if (possibly_prime) {
+            continue;
         }
 
         return 0;
