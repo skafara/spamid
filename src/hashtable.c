@@ -32,12 +32,11 @@ htab_link *htab_link_create(const htab *ht, const char *key, const void *value) 
         return NULL;
     }
 
-    new_htl->key = (char *) malloc(strlen(key) + 1);
+    new_htl->key = strdup(key);
     if (!new_htl->key) {
         free(new_htl);
         return NULL;
     }
-    strcpy((char *) new_htl->key, key);
 
     new_htl->value = (void *) malloc(ht->item_value_size);
     if (!new_htl->value) {
