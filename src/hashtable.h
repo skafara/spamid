@@ -2,11 +2,11 @@
  * \file hashtable.h
  * \brief Header file related to manipulation with a hashtable.
  *
- * Used for testing of number primality and generating prime numbers.
- * Operations are based on Miller-Rabin probabilistic algorithm.
- * Operations are optimized and 100 % correct (not probabilistic) for numbers < 1373653.
- * For numbers >= 1373653 the operations use the probabilistic approach
- * with 99.99847412109375 % accuracy of correct classification. ........
+ * Used for manipulation with a hashtable.
+ * Hashtable is implemented as an array (buckets)
+ * of linked lists of hashtable links (entries) containing the key-value pair.
+ * Hashtable key is a pointer to a copy of the provided key.
+ * Hashtable value is a pointer to a copy of the provided value (either a pointer or a direct value).
  */
 
 

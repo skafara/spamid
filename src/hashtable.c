@@ -1,3 +1,14 @@
+/**
+ * \file hashtable.c
+ * \brief Functions declared in hashtable.h are implemented in this file.
+ * 
+ * Hashtable is implemented as an array (buckets)
+ * of linked lists of hashtable links (entries) containing the key-value pair.
+ * Hashtable key is a pointer to a copy of the provided key.
+ * Hashtable value is a pointer to a copy of the provided value (either a pointer or a direct value).
+ */
+
+
 #include <string.h>
 
 #include "hashtable.h"
