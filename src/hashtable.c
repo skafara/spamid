@@ -55,14 +55,19 @@ htab_link *htab_link_create(const htab *ht, const char *key, const void *value) 
 /**
  * \brief htab_link_free Releases the memory held by the hashtable entry (link)
  *                       - frees htab_link struct
- *                       -- frees key (char array copy)
- *                                and value (void pointer to copy of the value,
-                                             where either a pointer or a direct value is stored)
+ *                       -- frees htab_link item value, if htab_item_value_deallocator was provided
+ *                       --- frees key (char array copy)
+ *                                 and value (copy of the value,
+ *                                            where either a pointer or a direct value is stored)
  *                       Does not check arguments validity.
+ * \param ht Pointer to a hashtable.
  * \param htl Pointer to a hashtable entry (link).
  */
-void htab_link_free(htab_link *htl) {
+void htab_link_free(htab *ht, htab_link *htl) {
     free((void *) htl->key);
+    if (ht->item_value_deallocator) {
+        (ht->item_value_deallocator)(&htl->value);
+    }
     free(htl->value);
     free(htl);
 }
@@ -78,7 +83,7 @@ void htab_clear_buckets(htab *ht) {
 }
 
 
-htab *htab_create(const size_t item_value_size) {
+htab *htab_create(const size_t item_value_size, const htab_item_value_deallocator item_value_deallocator) {
     htab *ht;
 
     if (item_value_size == 0) {
@@ -100,6 +105,7 @@ htab *htab_create(const size_t item_value_size) {
 
     ht->items_cnt = 0;
     *((size_t *) &ht->item_value_size) = item_value_size;
+    *((htab_item_value_deallocator *) &ht->item_value_deallocator) = item_value_deallocator;
 
     return ht;
 }
@@ -117,7 +123,7 @@ void htab_free(htab **ht) {
         htl = (*ht)->buckets[b];
         while (htl) {
             htl_next = htl->next;
-            htab_link_free(htl);
+            htab_link_free(*ht, htl);
             htl = htl_next;
         }
     }
@@ -284,7 +290,7 @@ int htab_add(htab *ht, const char *key, const void *value) {
     }
 
     if (!htab_add_link(ht, new_htl)) {
-        htab_link_free(new_htl);
+        htab_link_free(ht, new_htl);
         return 0;
     }
 
