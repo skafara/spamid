@@ -155,4 +155,10 @@ int htl_iter_has_next(const htl_iter *it);
 htab_link *htl_iter_next(htl_iter *it);
 
 
+/**
+ * \brief htl_iter_reset Returns the iterator to the beginning.
+ */
+void htl_iter_reset(htl_iter *it);
+
+
 #endif

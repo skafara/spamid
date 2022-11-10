@@ -340,9 +340,7 @@ htl_iter *htl_iter_create(const htab *ht) {
     }
 
     it->ht = ht;
-    it->bucket_curr = 0;
-    it->htl_next = NULL;
-    htl_iter_set_next_nonempty_bucket(it);
+    htl_iter_reset(it);
 
     return it;
 }
@@ -386,4 +384,15 @@ htab_link *htl_iter_next(htl_iter *it) {
     }
     
     return htl_tmp;
+}
+
+
+void htl_iter_reset(htl_iter *it) {
+    if (!it) {
+        return;
+    }
+
+    it->bucket_curr = 0;
+    it->htl_next = NULL;
+    htl_iter_set_next_nonempty_bucket(it);
 }
