@@ -91,6 +91,14 @@ void htab_free(htab **ht);
 
 
 /**
+ * \brief htab_items_cnt Returns hashtable item count.
+ * \param ht Pointer to a hastable.
+ * \return Hashtable items count.
+ */
+size_t htab_items_cnt(const htab *ht);
+
+
+/**
  * \brief htab_contains Checks whether an item with provided key is present in the hashtable.
  * \param ht Pointer to a hashtable.
  * \param key Key of an item to be searched for in the hashtable.

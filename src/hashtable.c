@@ -182,6 +182,15 @@ htab_link *htab_link_find(const htab *ht, const char *key) {
 }
 
 
+size_t htab_items_cnt(const htab *ht) {
+    if (!ht) {
+        return 0;
+    }
+
+    return ht->items_cnt;
+}
+
+
 int htab_contains(const htab *ht, const char *key) {
     if (!htab_link_find(ht, key)) {
         return 0;
