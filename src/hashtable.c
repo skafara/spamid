@@ -307,3 +307,83 @@ int htab_add(htab *ht, const char *key, const void *value) {
 
     return 1;
 }
+
+
+/**
+ * \brief htl_iter_set_next_nonempty_bucket Sets next hashtable entry (link) to the first hashtable entry (link)
+ *                                          in current bucket, if there is any,
+ *                                          otherwise iterates through buckets,
+ *                                          until finds a bucket having a hashtable entry (link).
+ *                                          Does not check arguments validity.
+ * \param it Pointer to an iterator.
+ */
+void htl_iter_set_next_nonempty_bucket(htl_iter *it) {
+    for (; it->bucket_curr < it->ht->buckets_cnt; it->bucket_curr++) {
+        if (it->ht->buckets[it->bucket_curr]) {
+            it->htl_next = it->ht->buckets[it->bucket_curr];
+            break;
+        }
+    }
+}
+
+
+htl_iter *htl_iter_create(const htab *ht) {
+    htl_iter *it;
+
+    if (!ht) {
+        return NULL;
+    }
+
+    it = (htl_iter *) malloc(sizeof(htl_iter));
+    if (!it) {
+        return NULL;
+    }
+
+    it->ht = ht;
+    it->bucket_curr = 0;
+    it->htl_next = NULL;
+    htl_iter_set_next_nonempty_bucket(it);
+
+    return it;
+}
+
+
+void htl_iter_free(htl_iter **it) {
+    if (!it || !(*it)) {
+        return;
+    }
+
+    free(*it);
+    *it = NULL;
+}
+
+
+int htl_iter_has_next(const htl_iter *it) {
+    if (!it) {
+        return 0;
+    }
+
+    if (!it->htl_next) {
+        return 0;
+    }
+    return 1;
+}
+
+
+htab_link *htl_iter_next(htl_iter *it) {
+    htab_link *htl_tmp;
+
+    if (!it || !htl_iter_has_next(it)) {
+        return NULL;
+    }
+
+    htl_tmp = it->htl_next;
+    
+    it->htl_next = it->htl_next->next;
+    if (!it->htl_next) {
+        it->bucket_curr++;
+        htl_iter_set_next_nonempty_bucket(it);
+    }
+    
+    return htl_tmp;
+}

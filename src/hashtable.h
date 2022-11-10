@@ -56,6 +56,17 @@ typedef struct htab_ {
 
 
 /**
+ * \struct htl_iter
+ * \brief Struct representing an iterator over hashtable entries (links).
+ */
+typedef struct htl_iter_ {
+    const htab *ht;         /**< Pointer to a hashtable to be iterated through. */
+    size_t bucket_curr;     /**< Bucket of the next hashtable entry (link). */
+    htab_link *htl_next;    /**< Pointer to the next hashtable entry (link). */
+} htl_iter;
+
+
+/**
  * \brief htab_create Creates an empty hashtable with default buckets count
  *                    ready to work with items with values of provided size.
  * \param item_value_size Size of hashtable item value.
@@ -109,6 +120,39 @@ int htab_get(const htab *ht, const char *key, void *dest);
  * \return 1 if the operation was successful, else 0.
  */
 int htab_add(htab *ht, const char *key, const void *value);
+
+
+/**
+ * \brief htl_iter_create Creates an iterator over entries (links) of provided hashtable.
+ * \param ht Pointer to a hashtable to be iterated through.
+ * \return Pointer to an iterator over hashtable entries (links).
+ */
+htl_iter *htl_iter_create(const htab *ht);
+
+
+/**
+ * \brief htl_iter_free Releases the memory held by the hashtable iterator
+ *                      - frees htl_iter struct
+ *                      and NULLs the pointer to the hashtable iterator.
+ * \param it Pointer to a pointer to an iterator.
+ */
+void htl_iter_free(htl_iter **it);
+
+
+/**
+ * \brief htl_iter_has_next Finds out whether the iterator has next hashtable entry (link).
+ * \param it Pointer to an iterator.
+ * \return 1 if iterator has next hashtable entry (link), else 0.
+ */
+int htl_iter_has_next(const htl_iter *it);
+
+
+/**
+ * \brief htl_iter_next Returns next hashtable entry (link), if there is any.
+ * \param it Pointer to an iterator.
+ * \return Pointer to next hashtable entry (link), if there is any, else NULL.
+ */
+htab_link *htl_iter_next(htl_iter *it);
 
 
 #endif
