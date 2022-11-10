@@ -13,6 +13,7 @@
 
 #include "hashtable.h"
 #include "primes.h"
+#include "arrays.h"
 
 
 /**
@@ -79,7 +80,7 @@ void htab_link_free(htab *ht, htab_link *htl) {
  * \param ht Pointer to a hashtable.
  */
 void htab_clear_buckets(htab *ht) {
-    memset(ht->buckets, 0, ht->buckets_cnt * sizeof(htab_link **));
+    array_clear(ht->buckets, ht->buckets_cnt, sizeof(htab_link *));
 }
 
 
@@ -96,12 +97,11 @@ htab *htab_create(const size_t item_value_size, const htab_item_value_deallocato
     }
 
     ht->buckets_cnt = H_DEF_BUCKETS_CNT;
-    ht->buckets = (htab_link **) malloc(ht->buckets_cnt * sizeof(htab_link *));
+    ht->buckets = (htab_link **) array_create(ht->buckets_cnt, sizeof(htab_link *));
     if (!ht->buckets) {
         free(ht);
         return NULL;
     }
-    htab_clear_buckets(ht);
 
     ht->items_cnt = 0;
     *((size_t *) &ht->item_value_size) = item_value_size;
@@ -128,7 +128,7 @@ void htab_free(htab **ht) {
         }
     }
 
-    free((*ht)->buckets);
+    array_free((void **) &(*ht)->buckets);
     free(*ht);
     *ht = NULL;
 }
@@ -238,7 +238,7 @@ int htab_expand_buckets(htab *ht, const size_t new_cnt) {
     old_buckets = ht->buckets;
     old_buckets_cnt = ht->buckets_cnt;
 
-    ht->buckets = (htab_link **) malloc(new_cnt * sizeof(htab_link *));
+    ht->buckets = (htab_link **) array_create(new_cnt, sizeof(htab_link *));
     if (!ht->buckets) {
         ht->buckets = old_buckets;
         return 0;
@@ -246,7 +246,6 @@ int htab_expand_buckets(htab *ht, const size_t new_cnt) {
     
     ht->buckets_cnt = new_cnt;
     
-    htab_clear_buckets(ht);
     old_items_cnt = ht->items_cnt;
     ht->items_cnt = 0;
     for (b = 0; b < old_buckets_cnt; b++) {
@@ -254,7 +253,7 @@ int htab_expand_buckets(htab *ht, const size_t new_cnt) {
         while (htl) {
             htl_next = htl->next;
             if (!htab_add_link(ht, htl)) {
-                free(ht->buckets);
+                array_free((void **) &ht->buckets);
                 ht->buckets = old_buckets;
                 ht->buckets_cnt = old_buckets_cnt;
                 ht->items_cnt = old_items_cnt;
@@ -263,7 +262,7 @@ int htab_expand_buckets(htab *ht, const size_t new_cnt) {
             htl = htl_next;
         }
     }
-    free(old_buckets);
+    array_free((void **) &old_buckets);
 
     return 1;
 }
