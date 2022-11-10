@@ -155,45 +155,56 @@ size_t htab_hcode(const char *key, const size_t divisor) {
 }
 
 
-int htab_contains(const htab *ht, const char *key) {
+/**
+ * \brief htab_link_find Searches for the item with provided key in the hashtable
+ *                       and if found, returns a pointer to the hashtable entry (link).
+ * \param ht Pointer to a hashtable.
+ * \param key Key of an item to be searched for in the hashtable.
+ * \return Pointer to a hashtable item (link) having the same key if found, else NULL.
+ */
+htab_link *htab_link_find(const htab *ht, const char *key) {
     htab_link *htl;
 
     if (!ht || !key) {
-        return 0;
+        return NULL;
     }
 
     htl = ht->buckets[htab_hcode(key, ht->buckets_cnt)];
     while (htl) {
         if (strcmp(key, htl->key) == 0) {
-            return 1;
+            return htl;
         }
 
         htl = htl->next;
     }
 
-    return 0;
+    return NULL;
+}
+
+
+int htab_contains(const htab *ht, const char *key) {
+    if (!htab_link_find(ht, key)) {
+        return 0;
+    }
+
+    return 1;
 }
 
 
 int htab_get(const htab *ht, const char *key, void *dest) {
     htab_link *htl;
 
-    if (!ht || !key || !dest) {
+    if (!dest) {
         return 0;
     }
 
-    htl = ht->buckets[htab_hcode(key, ht->buckets_cnt)];
-    while (htl) {
-        if (strcmp(key, htl->key) == 0) {
-            memcpy(dest, htl->value, ht->item_value_size);
-
-            return 1;
-        }
-
-        htl = htl->next;
+    htl = htab_link_find(ht, key);
+    if (!htl) {
+        return 0;
     }
-    
-    return 0;
+
+    memcpy(dest, htl->value, ht->item_value_size);
+    return 1;
 }
 
 
