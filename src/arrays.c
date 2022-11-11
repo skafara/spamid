@@ -1,14 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-void array_clear(void *arr, size_t item_cnt, size_t item_size) {
-    if (!arr) {
-        return;
-    }
-
-    memset(arr, 0, item_cnt * item_size);
-}
+#include "arrays.h"
 
 
 void *array_create(size_t item_cnt, size_t item_size) {
@@ -38,4 +31,33 @@ void array_free(void **arr) {
 
     free(*arr);
     *arr = NULL;
+}
+
+
+void array_clear(void *arr, size_t item_cnt, size_t item_size) {
+    if (!arr) {
+        return;
+    }
+
+    memset(arr, 0, item_cnt * item_size);
+}
+
+
+void *array_extreme(void *arr, cmp_func cmp, size_t item_cnt, size_t item_size) {
+    char *value1, *value2, *extreme;
+
+    if (!arr || item_cnt == 0 || item_size == 0) {
+        return NULL;
+    }
+
+    value1 = (char *) arr;
+    value2 = value1 + item_size;
+    extreme = value1;
+    for (; value2 < (char *) arr + (item_cnt * item_size); value1 = value2, value2 += item_size) {
+        if (cmp(value2, value1) > 0) {
+            extreme = value2;
+        }
+    }
+
+    return extreme;
 }
