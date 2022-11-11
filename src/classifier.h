@@ -64,6 +64,13 @@ int nbc_learn(nbc *cl, const char *f_paths[], const size_t f_counts[]);
 
 
 /**
+ * \brief nbc_is_learnt Finds out whether classifier was successfully taught.
+ * \return 1 if classifier was already successfully taught, else 0.
+ */
+int nbc_is_learnt(const nbc *cl);
+
+
+/**
  * \brief nbc_classify Classifies the provided file.
  * \param cl Pointer to the classifier to classify the file.
  * \param f_path Path to the file to be classified.
