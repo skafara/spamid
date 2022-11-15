@@ -1,3 +1,9 @@
+/**
+ * \file arrays.c
+ * \brief Functions declared in arrays.h are implemented in this file.
+ */
+
+
 #include <stdlib.h>
 #include <string.h>
 
