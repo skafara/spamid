@@ -49,7 +49,7 @@ void array_clear(void *arr, size_t item_cnt, size_t item_size) {
 }
 
 
-void *array_extreme(void *arr, cmp_func cmp, size_t item_cnt, size_t item_size) {
+void *array_extreme(const void *arr, cmp_func cmp, size_t item_cnt, size_t item_size) {
     char *value1, *value2, *extreme;
 
     if (!arr || item_cnt == 0 || item_size == 0) {

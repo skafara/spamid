@@ -52,7 +52,7 @@ void array_clear(void *arr, size_t item_cnt, size_t item_size);
  * \param item_cnt Array items count.
  * \param item_size Size of an item of the array.
  */
-void *array_extreme(void *arr, cmp_func cmp, size_t item_cnt, size_t item_size);
+void *array_extreme(const void *arr, cmp_func cmp, size_t item_cnt, size_t item_size);
 
 
 #endif
