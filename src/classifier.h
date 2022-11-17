@@ -2,18 +2,19 @@
  * \file classifier.h
  * \brief Header file related to manipulation with a naive Bayes classifier.
  *
- * Naive Bayse classifier uses the bag-of-words model.
+ * Represents a general naive Bayes classifier.
+ * Classifier has variable count of classes and uses the bag-of-words model.
  */
+
+
+#ifndef CLASSIFIER_H
+#define CLASSIFIER_H
 
 
 #include <stddef.h>
 #include <stdio.h>
 
 #include "hashtable.h"
-
-
-#ifndef CLASSIFIER_H
-#define CLASSIFIER_H
 
 
 /**
@@ -44,7 +45,7 @@ nbc *nbc_create(const int cls_cnt);
 /**
  * \brief nbc_free Releases the memory held by the classifier
  *                 - frees nbc struct
- *                 -- frees arrays and hashtables TODO
+ *                 -- frees arrays and hashtables
  *                 and NULLs the pointer to the classifier.
  * \param cl Pointer to a pointer to a classifier.
  */
@@ -56,7 +57,7 @@ void nbc_free(nbc **cl);
  *                  Classifier may be successfully taught only once,
  *                  any other attempts will fail.
  * \param cl Pointer to the classifier to be taught.
- * \param f_paths Array of arrays of file paths. Index is the class.
+ * \param f_paths Array of file paths.
  * \param f_counts Numbers of file paths of classes.
  * \return 1 if classifier successfully learnt the files, 0 otherwise.
  */
