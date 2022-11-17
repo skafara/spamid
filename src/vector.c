@@ -84,6 +84,31 @@ vector *vector_create(const size_t item_size, const vector_item_deallocator deal
 }
 
 
+vector *vector_clone(const vector *v) {
+    vector *clone;
+
+    if (!v) {
+        return NULL;
+    }
+
+    clone = vector_create(v->item_size, v->deallocator);
+    if (!clone) {
+        return NULL;
+    }
+    if (vector_capacity(v) != vector_capacity(clone)) {
+        if (vector_realloc(clone, vector_capacity(v))) {
+            vector_free(&clone);
+            return NULL;
+        }
+    }
+
+    clone->count = v->count;
+    memcpy(clone->data, v->data, vector_count(clone) * clone->item_size);
+
+    return clone;
+}
+
+
 /**
  * \brief vector_at_ Returns a pointer to the item with provided index.
  *                   Does not check argument validity.
@@ -117,6 +142,25 @@ int vector_push_back(vector *v, const void *item) {
     memcpy(vector_at_(v, v->count), item, v->item_size);
     v->count++;
     
+    return 1;
+}
+
+
+int vector_push_back_many(vector *v, const void *items, const size_t items_cnt) {
+    size_t v_old_capacity;
+    size_t i;
+
+    v_old_capacity = v->capacity;
+    for (i = 0; i < items_cnt; i++) {
+        if (!vector_push_back(v, ((char *) items) + (i * v->item_size))) {
+            v->count -= i;
+            if (vector_capacity(v) != v_old_capacity) {
+                vector_realloc(v, v_old_capacity);
+            }
+            return 0;
+        }
+    }
+
     return 1;
 }
 

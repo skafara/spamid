@@ -58,6 +58,14 @@ int vector_init(vector *v, const size_t item_size, const vector_item_deallocator
 
 
 /**
+ * \brief vector_clone Clones a vector and returns a pointer to the clone.
+ * \param v Pointer to a vector.
+ * \return Pointer to the clone.
+ */
+vector *vector_clone(const vector *v);
+
+
+/**
  * \brief vector_free Releases the memory held by the vector
  *                    - frees vector struct
  *                    -- frees each vector item, if vector item deallocator was provided
@@ -126,6 +134,16 @@ void *vector_at(const vector *v, const size_t index);
  * \return 1 if operation was successful, else 0.
  */
 int vector_push_back(vector *v, const void *item);
+
+
+/**
+ * \brief vector_push_back_many Appends many items to the end of the vector.
+ * \param v Pointer to a vector.
+ * \param items Pointer to the items, ie. pointer to the first item (array of items to be appended).
+ * \param items_cnt Count of items to be appended.
+ * \return 1 if operation was successful, else 0.
+ */
+int vector_push_back_many(vector *v, const void *items, const size_t items_cnt);
 
 
 /**
