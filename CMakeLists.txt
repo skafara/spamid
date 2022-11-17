@@ -7,6 +7,9 @@ add_executable(
     spamid.exe
 
     src/spamid.c
-    src/hashtable.c    
+    src/classifier.c
+    src/hashtable.c
+    src/vector.c
+    src/arrays.c
     src/primes.c
 )
