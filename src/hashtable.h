@@ -10,11 +10,10 @@
  */
 
 
-#include <stdlib.h>
-
-
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
+
+#include <stddef.h>
 
 /**< Hashtable default buckets count. */
 #define H_DEF_BUCKETS_CNT 5

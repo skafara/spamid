@@ -27,7 +27,7 @@ typedef int (*cmp_func)(const void *value1, const void *value2);
  * \param item_size Size of an item.
  * \return Pointer to the created array.
  */
-void *array_create(size_t item_cnt, size_t item_size);
+void *array_create(const size_t item_cnt, const size_t item_size);
 
 
 /**
@@ -42,7 +42,7 @@ void array_free(void **arr);
  * \param item_cnt Array item count.
  * \param item_size Size of an item.
  */
-void array_clear(void *arr, size_t item_cnt, size_t item_size);
+void array_clear(void *arr, const size_t item_cnt, const size_t item_size);
 
 
 /**
@@ -52,7 +52,7 @@ void array_clear(void *arr, size_t item_cnt, size_t item_size);
  * \param item_cnt Array items count.
  * \param item_size Size of an item of the array.
  */
-void *array_extreme(const void *arr, cmp_func cmp, size_t item_cnt, size_t item_size);
+void *array_extreme(const void *arr, const cmp_func cmp, const size_t item_cnt, const size_t item_size);
 
 
 #endif

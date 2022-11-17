@@ -7,6 +7,7 @@
  */
 
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -474,7 +475,7 @@ int nbc_classify(const nbc *cl, const char f_path[]) {
 
     cls = max_prob - probs;
     array_free((void **) &probs);
-    
+
     return cls;
 
     fail:

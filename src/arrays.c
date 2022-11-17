@@ -10,7 +10,7 @@
 #include "arrays.h"
 
 
-void *array_create(size_t item_cnt, size_t item_size) {
+void *array_create(const size_t item_cnt, const size_t item_size) {
     void *arr;
     size_t alloc_size;
 
@@ -40,7 +40,7 @@ void array_free(void **arr) {
 }
 
 
-void array_clear(void *arr, size_t item_cnt, size_t item_size) {
+void array_clear(void *arr, const size_t item_cnt, const size_t item_size) {
     if (!arr) {
         return;
     }
@@ -49,7 +49,7 @@ void array_clear(void *arr, size_t item_cnt, size_t item_size) {
 }
 
 
-void *array_extreme(const void *arr, cmp_func cmp, size_t item_cnt, size_t item_size) {
+void *array_extreme(const void *arr, const cmp_func cmp, const size_t item_cnt, const size_t item_size) {
     char *value1, *value2, *extreme;
 
     if (!arr || item_cnt == 0 || item_size == 0) {

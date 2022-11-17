@@ -10,11 +10,10 @@
  */
 
 
-#include <stddef.h>
-
-
 #ifndef PRIMES_H
 #define PRIMES_H
+
+#include <stddef.h>
 
 
 /**< Test case 1: numbers < 2047. */
@@ -36,7 +35,7 @@
  * \param num Number to be tested for primality.
  * \return 1 if num is determined to be prime, 0 if num is definetely not prime.
  */
-int is_prime(size_t num);
+int is_prime(const size_t num);
 
 
 /**

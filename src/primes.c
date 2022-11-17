@@ -11,9 +11,9 @@
 
 
 /** Test case 1: numbers < 2047 are tested against this test numbers subset. */
-const size_t test_a1[] = {2};
+const size_t TEST_A1[] = {2};
 /** Test case 2: numbers >= 2047 and < 1373653 are tested against this test numbers subset. */
-const size_t test_a2[] = {2, 3};
+const size_t TEST_A2[] = {2, 3};
 
 
 /**
@@ -24,7 +24,7 @@ const size_t test_a2[] = {2, 3};
  * \param test_cnt Number of tests the number must pass to be able to be classified as a prime number.
  * \return 
  */
-int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
+int mil_rab_test(const size_t n, const size_t test_a[], const size_t test_cnt) {
     size_t nm;
     size_t k, m;
     size_t b, a;
@@ -89,12 +89,12 @@ int mil_rab_test(size_t n, const size_t test_a[], size_t test_cnt) {
  * \param num Number to be tested for primality (> 2).
  * \return 1 if num is determined to be prime, 0 if num is definetely not prime.
  */
-int mil_rab(size_t num) {
+int mil_rab(const size_t num) {
     if (num < P_TEST_N1) {
-        return mil_rab_test(num, test_a1, P_TEST_A1_LEN);
+        return mil_rab_test(num, TEST_A1, P_TEST_A1_LEN);
     }
     else if (num < P_TEST_N2) {
-        return mil_rab_test(num, test_a2, P_TEST_A2_LEN);
+        return mil_rab_test(num, TEST_A2, P_TEST_A2_LEN);
     }
     else {
         srand(time(NULL));
@@ -103,7 +103,7 @@ int mil_rab(size_t num) {
 }
 
 
-int is_prime(size_t num) {
+int is_prime(const size_t num) {
     if (num < 2) {
         return 0;
     }
