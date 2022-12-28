@@ -1,6 +1,8 @@
 /**
  * \file primes.c
  * \brief Functions declared in primes.h are implemented in this file.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  */
 
 
@@ -22,9 +24,11 @@ const size_t TEST_A2[] = {2, 3};
  * \param n Number to be tested for primality.
  * \param test_a Test numbers subset against which the provided number will be tested.
  * \param test_cnt Number of tests the number must pass to be able to be classified as a prime number.
- * \return 
+ * \return 1 if num is determined to be prime, 0 if num is definetely not prime.
  */
 int mil_rab_test(const size_t n, const size_t test_a[], const size_t test_cnt) {
+    /* Implementation of pseudocode of Miller-Rabin primality test */
+    /* source: https://en.wikipedia.org/wiki/Miller–Rabin_primality_test */
     size_t nm;
     size_t k, m;
     size_t b, a;

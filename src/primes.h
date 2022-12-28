@@ -1,6 +1,8 @@
 /**
  * \file primes.h
  * \brief Header file related to number primality test and prime numbers generation.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  *
  * Used for testing of number primality and generating prime numbers.
  * Operations are based on Miller-Rabin probabilistic algorithm.
