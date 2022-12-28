@@ -1,6 +1,8 @@
 /**
  * \file hashtable.h
  * \brief Header file related to manipulation with a hashtable.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  *
  * Used for manipulation with a hashtable.
  * Hashtable is implemented as an array (buckets)
@@ -14,6 +16,7 @@
 #define HASHTABLE_H
 
 #include <stddef.h>
+
 
 /**< Hashtable default buckets count. */
 #define H_DEF_BUCKETS_CNT 5
@@ -49,8 +52,7 @@ typedef struct htab_ {
     size_t buckets_cnt;             /**< Hashtable buckets count. */
     size_t items_cnt;               /**< Hashtable items count. */
     const size_t item_value_size;   /**< Hashtable item value size. */
-    const htab_item_value_deallocator item_value_deallocator;
-                                    /**< Hashtable item value deallocator. */
+    const htab_item_value_deallocator item_value_deallocator; /**< Hashtable item value deallocator. */
 } htab;
 
 
@@ -79,11 +81,11 @@ htab *htab_create(const size_t item_value_size, const htab_item_value_deallocato
  * \brief htab_free Releases the memory held by the hashtable
  *                  - frees htab struct
  *                  -- frees each htab_link struct in buckets
- *                  --- frees htab_link item value, if htab_item_value_deallocator was provided
- *                  ---- frees htab_link key (char array copy)
- *                                       and value (copy of the value,
- *                                                  where either a pointer or a direct value is stored)
- *                  and NULLs the pointer to the hashtable.
+ *                  --- frees htab_link key (char array copy)
+ *                                      and value (copy of the value,
+ *                                                 where either a pointer or a direct value is stored)
+ *                  ---- frees htab_link item value, if htab_item_value_deallocator was provided
+ *                       and NULLs the pointer to the hashtable.
  * \param ht Pointer to a pointer to a hashtable.
  */
 void htab_free(htab **ht);
@@ -104,6 +106,16 @@ size_t htab_items_cnt(const htab *ht);
  * \return 1 if the hashtable contains an item with provided key, else 0.
  */
 int htab_contains(const htab *ht, const char *key);
+
+
+/**
+ * \brief htab_ptrget Searches for the item with provided key in the hashtable
+ *                    and if found, returns a pointer to the item value.
+ * \param ht Pointer to a hashtable.
+ * \param key Key of an item to be searched for in the hashtable.
+ * \return Pointer to the item value if the hashtable contains an item with provided key, else NULL.
+ */
+void *htab_ptrget(const htab *ht, const char *key);
 
 
 /**

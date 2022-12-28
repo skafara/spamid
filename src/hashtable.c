@@ -1,6 +1,8 @@
 /**
  * \file hashtable.c
  * \brief Functions declared in hashtable.h are implemented in this file.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  * 
  * Hashtable is implemented as an array (buckets)
  * of linked lists of hashtable links (entries) containing the key-value pair.
@@ -201,6 +203,19 @@ int htab_contains(const htab *ht, const char *key) {
 }
 
 
+void *htab_ptrget(const htab *ht, const char *key) {
+    htab_link *htl;
+    
+    htl = htab_link_find(ht, key);
+    if (!htl) {
+        return NULL;
+    }
+
+    return htl->value;
+}
+
+
+/* cannot rely on htab_ptrget because value may be NULL */
 int htab_get(const htab *ht, const char *key, void *dest) {
     htab_link *htl;
 
