@@ -1,6 +1,8 @@
 /**
  * \file arrays.c
  * \brief Functions declared in arrays.h are implemented in this file.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  */
 
 
@@ -11,15 +13,13 @@
 
 
 void *array_create(const size_t item_cnt, const size_t item_size) {
-    void *arr;
-    size_t alloc_size;
+    void *arr = NULL;
 
     if (item_cnt == 0 || item_size == 0) {
         return NULL;
     }
 
-    alloc_size = item_cnt * item_size;
-    arr = malloc(alloc_size);
+    arr = malloc(item_cnt * item_size);
     if (!arr) {
         return NULL;
     }
@@ -50,7 +50,7 @@ void array_clear(void *arr, const size_t item_cnt, const size_t item_size) {
 
 
 void *array_extreme(const void *arr, const cmp_func cmp, const size_t item_cnt, const size_t item_size) {
-    char *value1, *value2, *extreme;
+    char *value1 = NULL, *value2 = NULL, *extreme = NULL;
 
     if (!arr || item_cnt == 0 || item_size == 0) {
         return NULL;
@@ -59,11 +59,13 @@ void *array_extreme(const void *arr, const cmp_func cmp, const size_t item_cnt, 
     value1 = (char *) arr;
     value2 = value1 + item_size;
     extreme = value1;
-    for (; value2 < (char *) arr + (item_cnt * item_size); value1 = value2, value2 += item_size) {
+    while (value2 < (char *) arr + (item_cnt * item_size)) {
         if (cmp(value2, value1) > 0) {
             extreme = value2;
         }
-    }
 
+        value1 = value2;
+        value2 += item_size;
+    }
     return extreme;
 }
