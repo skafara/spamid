@@ -1,6 +1,8 @@
 /**
  * \file classifier.c
  * \brief Functions declared in classifier.c are implemented in this file.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  *
  * Represents a general naive Bayes classifier.
  * Classifier has variable count of classes and uses the bag-of-words model.
@@ -19,14 +21,14 @@
 /**
  * \brief f_next_str Reads next string from the file stream.
  *                   Allocates a memory for the string and returns the pointer to the string.
- *                   Allocated memory must later be freed.
+ *                   Allocated memory must later be released.
  * \param fp File handle.
  * \return Pointer to the newly allocated memory, where the string is stored,
  *         or NULL if there is not any more.
  */
 char *f_next_str(FILE *fp) {
-    vector *v;
-    char *str;
+    vector *v = NULL;
+    char *str = NULL;
     int c;
 
     if (!fp) {
@@ -65,7 +67,7 @@ char *f_next_str(FILE *fp) {
     vector_free(&v);
     return str;
 
-    fail:
+fail:
     vector_free(&v);
     return NULL;
 }
@@ -115,9 +117,9 @@ void nbc_arrays_htabs_free(nbc *cl) {
  * \return 1 if operation was successful, else 0.
  */
 int nbc_reset(nbc *cl) {
-    double *new_cls_prob;
-    size_t *new_cls_words_cnt;
-    htab *new_words_cnt, *new_words_prob;
+    double *new_cls_prob = NULL;
+    size_t *new_cls_words_cnt = NULL;
+    htab *new_words_cnt = NULL, *new_words_prob = NULL;
 
     if (!cl) {
         return 0;
@@ -168,7 +170,7 @@ int nbc_initialize(nbc *cl, const int cls_cnt) {
 
 
 nbc *nbc_create(const int cls_cnt) {
-    nbc *cl;
+    nbc *cl = NULL;
 
     if (cls_cnt == 0) {
         return NULL;
@@ -229,8 +231,8 @@ void nbc_set_cls_prob(nbc *cl, const size_t f_counts[]) {
  * \return 1 if counts of words were successfuly added.
  */
 int nbc_add_words_cnt(nbc *cl, FILE *fp, const int cls) {
-    char *word;
-    size_t *word_cnt;
+    char *word = NULL;
+    size_t *word_cnt = NULL;
 
     while ((word = f_next_str(fp))) {
         if (htab_contains(cl->words_cnt, word)) {
@@ -255,7 +257,7 @@ int nbc_add_words_cnt(nbc *cl, FILE *fp, const int cls) {
 
     return 1;
 
-    fail:
+fail:
     free(word);
     return 0;
 }
@@ -270,7 +272,7 @@ int nbc_add_words_cnt(nbc *cl, FILE *fp, const int cls) {
  */
 int nbc_set_words_cnt(nbc *cl, const char *f_paths[], const size_t f_counts[]) {
     size_t f, f_offset;
-    FILE *fp;
+    FILE *fp = NULL;
     int cls;
 
     f_offset = 0;
@@ -305,9 +307,9 @@ int nbc_set_words_cnt(nbc *cl, const char *f_paths[], const size_t f_counts[]) {
  * \return 1 if operation was successful, else 0.
  */
 int nbc_set_cls_words_cnt(nbc *cl) {
-    size_t *words_cnt;
-    htl_iter *it;
-    htab_link *htl;
+    size_t *words_cnt = NULL;
+    htl_iter *it = NULL;
+    htab_link *htl = NULL;
     int cls;
 
     words_cnt = array_create(cl->cls_cnt, sizeof(size_t));
@@ -350,10 +352,10 @@ void nbc_set_dict_size(nbc *cl) {
  * \return 1 if operation was successful, else 0.
  */
 int nbc_set_words_prob(nbc *cl) {
-    htl_iter *it;
-    htab_link *htl;
-    double *word_prob;
-    size_t *word_cnt;
+    htl_iter *it = NULL;
+    htab_link *htl = NULL;
+    double *word_prob = NULL;
+    size_t *word_cnt = NULL;
     int cls;
 
     it = htl_iter_create(cl->words_cnt);
@@ -412,7 +414,7 @@ int nbc_learn(nbc *cl, const char *f_paths[], const size_t f_counts[]) {
 
     return 1;
 
-    fail:
+fail:
     nbc_reset(cl);
     return 0;
 }
@@ -428,12 +430,12 @@ int nbc_is_learnt(const nbc *cl) {
 
 
 int nbc_classify(const nbc *cl, const char f_path[]) {
-    FILE *fp;
-    double *probs;
+    FILE *fp = NULL;
+    double *probs = NULL;
     int cls;
-    char *word;
-    double *word_prob;
-    double *max_prob;
+    char *word = NULL;
+    double *word_prob = NULL;
+    double *max_prob = NULL;
 
     if (!nbc_is_learnt(cl)) {
         return -1;
@@ -444,7 +446,7 @@ int nbc_classify(const nbc *cl, const char f_path[]) {
         return -1;
     }
 
-    probs = array_create(2, sizeof(double));
+    probs = array_create(cl->cls_cnt, sizeof(double));
     if (!probs) {
         goto fail;
     }
@@ -478,7 +480,7 @@ int nbc_classify(const nbc *cl, const char f_path[]) {
 
     return cls;
 
-    fail:
+fail:
     if (fp) {
         fclose(fp);
         fp = NULL;

@@ -1,6 +1,8 @@
 /**
  * \file classifier.h
  * \brief Header file related to manipulation with a naive Bayes classifier.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
  *
  * Represents a general naive Bayes classifier.
  * Classifier has variable count of classes and uses the bag-of-words model.
