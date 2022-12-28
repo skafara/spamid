@@ -29,7 +29,7 @@
  * \return Pointer to a newly created hashtable entry (link) with aformentioned properties.
  */
 htab_link *htab_link_create(const htab *ht, const char *key, const void *value) {
-    htab_link *new_htl;
+    htab_link *new_htl = NULL;
 
     new_htl = (htab_link *) malloc(sizeof(htab_link));
     if (!new_htl) {
@@ -88,7 +88,7 @@ void htab_clear_buckets(htab *ht) {
 
 
 htab *htab_create(const size_t item_value_size, const htab_item_value_deallocator item_value_deallocator) {
-    htab *ht;
+    htab *ht = NULL;
 
     if (item_value_size == 0) {
         return NULL;
@@ -116,7 +116,7 @@ htab *htab_create(const size_t item_value_size, const htab_item_value_deallocato
 
 void htab_free(htab **ht) {
     size_t b;
-    htab_link *htl, *htl_next;
+    htab_link *htl = NULL, *htl_next = NULL;
 
     if (!ht || !(*ht)) {
         return;
@@ -166,7 +166,7 @@ size_t htab_hcode(const char *key, const size_t divisor) {
  * \return Pointer to a hashtable item (link) having the same key if found, else NULL.
  */
 htab_link *htab_link_find(const htab *ht, const char *key) {
-    htab_link *htl;
+    htab_link *htl = NULL;
 
     if (!ht || !key) {
         return NULL;
@@ -204,7 +204,7 @@ int htab_contains(const htab *ht, const char *key) {
 
 
 void *htab_ptrget(const htab *ht, const char *key) {
-    htab_link *htl;
+    htab_link *htl = NULL;
     
     htl = htab_link_find(ht, key);
     if (!htl) {
@@ -217,7 +217,7 @@ void *htab_ptrget(const htab *ht, const char *key) {
 
 /* cannot rely on htab_ptrget because value may be NULL */
 int htab_get(const htab *ht, const char *key, void *dest) {
-    htab_link *htl;
+    htab_link *htl = NULL;
 
     if (!dest) {
         return 0;
@@ -245,8 +245,8 @@ int htab_add_link(htab *ht, htab_link *new_htl);
  * \return 1 if the operation was successful, else 0.
  */
 int htab_expand_buckets(htab *ht, const size_t new_cnt) {
-    htab_link **old_buckets;
-    htab_link *htl, *htl_next;
+    htab_link **old_buckets = NULL;
+    htab_link *htl = NULL, *htl_next = NULL;
     size_t old_buckets_cnt;
     size_t old_items_cnt;
     size_t b;
@@ -313,7 +313,7 @@ int htab_add_link(htab *ht, htab_link *new_htl) {
 
 
 int htab_add(htab *ht, const char *key, const void *value) {
-    htab_link *new_htl;
+    htab_link *new_htl = NULL;
 
     if (!ht || !key || !value) {
         return 0;
@@ -352,7 +352,7 @@ void htl_iter_set_next_nonempty_bucket(htl_iter *it) {
 
 
 htl_iter *htl_iter_create(const htab *ht) {
-    htl_iter *it;
+    htl_iter *it = NULL;
 
     if (!ht) {
         return NULL;
@@ -393,7 +393,7 @@ int htl_iter_has_next(const htl_iter *it) {
 
 
 htab_link *htl_iter_next(htl_iter *it) {
-    htab_link *htl_tmp;
+    htab_link *htl_tmp = NULL;
 
     if (!it || !htl_iter_has_next(it)) {
         return NULL;
