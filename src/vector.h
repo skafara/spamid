@@ -1,7 +1,10 @@
 /**
  * \file vector.h
  * \brief Header file related to manipulaiton with a vector.
- *        Vector is a dynamically resizable array.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
+ * 
+ * Vector is a dynamically resizable array.
  */
 
 

@@ -1,7 +1,10 @@
 /**
  * \file vector.c
  * \brief Functions declared in vector.h are implemented in this file.
- *        Vector is a dynamically resizable array.
+ * \version 1, 28-12-2022
+ * \author Stanislav Kafara, skafara@students.zcu.cz
+ * 
+ * Vector is a dynamically resizable array.
  */
 
 
@@ -12,7 +15,7 @@
 
 
 int vector_realloc(vector *v, const size_t size) {
-    void *new_data;
+    void *new_data = NULL;
 
     if (!v || size < vector_count(v)) {
         return 0;
@@ -64,7 +67,7 @@ int vector_init(vector *v, const size_t item_size, const vector_item_deallocator
 
 
 vector *vector_create(const size_t item_size, const vector_item_deallocator deallocator) {
-    vector *v;
+    vector *v = NULL;
 
     if (item_size == 0) {
         return NULL;
@@ -84,8 +87,52 @@ vector *vector_create(const size_t item_size, const vector_item_deallocator deal
 }
 
 
+/**
+ * \brief vector_at_ Returns a pointer to the item with provided index.
+ *                   Does not check argument validity.
+ * \return Pointer to the item with provided index.
+ */
+void *vector_at_(const vector *v, const size_t index) {
+    return (void *) ((char *) v->data + (index * v->item_size));
+}
+
+
+/**
+ * \brief vector_free_items Releases the memory held by the vector item using the provided deallocator.
+ * \param v Pointer to a vector.
+ * \param begin_index Index of the item to begin with releasing the memory.
+ * \param cnt Count of items to deallocate.
+ */
+void vector_free_items(vector *v, size_t begin_index, size_t cnt) {
+    size_t i;
+
+    if (!v || !v->deallocator || cnt == 0) {
+        return;
+    }
+
+    for (i = begin_index; i < begin_index + cnt; i++) {
+        (v->deallocator)(vector_at_(v, i));
+    }
+}
+
+
+void vector_free(vector **v) {
+    if (!v || !(*v)) {
+        return;
+    }
+
+    vector_free_items(*v, 0, vector_count(*v));
+
+    if ((*v)->data) {
+        free((*v)->data);
+    }
+    free(*v);
+    *v = NULL;
+}
+
+
 vector *vector_clone(const vector *v) {
-    vector *clone;
+    vector *clone = NULL;
 
     if (!v) {
         return NULL;
@@ -96,7 +143,7 @@ vector *vector_clone(const vector *v) {
         return NULL;
     }
     if (vector_capacity(v) != vector_capacity(clone)) {
-        if (vector_realloc(clone, vector_capacity(v))) {
+        if (!vector_realloc(clone, vector_capacity(v))) {
             vector_free(&clone);
             return NULL;
         }
@@ -106,16 +153,6 @@ vector *vector_clone(const vector *v) {
     memcpy(clone->data, v->data, vector_count(clone) * clone->item_size);
 
     return clone;
-}
-
-
-/**
- * \brief vector_at_ Returns a pointer to the item with provided index.
- *                   Does not check argument validity.
- * \return Pointer to the item with provided index.
- */
-void *vector_at_(const vector *v, const size_t index) {
-    return (void *) ((char *) v->data + (index * v->item_size));
 }
 
 
@@ -154,6 +191,7 @@ int vector_push_back_many(vector *v, const void *items, const size_t items_cnt) 
     for (i = 0; i < items_cnt; i++) {
         if (!vector_push_back(v, ((char *) items) + (i * v->item_size))) {
             v->count -= i;
+            vector_free_items(v, v->count + 1, i);
             if (vector_capacity(v) != v_old_capacity) {
                 vector_realloc(v, v_old_capacity);
             }
@@ -191,7 +229,7 @@ int vector_is_empty(const vector *v)  {
 
 
 void *vector_give_up_data(vector *v) {
-    void *data;
+    void *data = NULL;
 
     if (vector_is_empty(v)) {
         return NULL;
@@ -202,25 +240,4 @@ void *vector_give_up_data(vector *v) {
     vector_init(v, v->item_size, v->deallocator);
 
     return data;
-}
-
-
-void vector_free(vector **v) {
-    size_t i;
-
-    if (!v || !(*v)) {
-        return;
-    }
-
-    if ((*v)->deallocator) {
-        for (i = 0; i < vector_count(*v); i++) {
-            ((*v)->deallocator)(vector_at_(*v, i));
-        }
-    }
-
-    if ((*v)->data) {
-        free((*v)->data);
-    }
-    free(*v);
-    *v = NULL;
 }
