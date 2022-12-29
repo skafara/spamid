@@ -15,8 +15,8 @@
 #include <string.h>
 
 #include "hashtable.h"
-#include "primes.h"
-#include "arrays.h"
+#include "../utilities/arrays.h"
+#include "../utilities/primes.h"
 
 
 /**

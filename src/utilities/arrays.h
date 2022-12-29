@@ -10,9 +10,6 @@
 #define ARRAYS_H
 
 
-#include <stddef.h>
-
-
 /**
  * \brief cmp_func Performs a comparison of the two provided values.
  * \param value1 Pointer to the first value.

@@ -14,8 +14,8 @@
 #include <math.h>
 
 #include "classifier.h"
-#include "vector.h"
-#include "arrays.h"
+#include "structures/vector.h"
+#include "utilities/arrays.h"
 
 
 /**

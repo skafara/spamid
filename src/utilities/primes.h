@@ -15,8 +15,6 @@
 #ifndef PRIMES_H
 #define PRIMES_H
 
-#include <stddef.h>
-
 
 /**< Test case 1: numbers < 2047. */
 #define P_TEST_N1 2047

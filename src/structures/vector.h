@@ -11,8 +11,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include <stddef.h>
-
 
 /** \brief Initial vector capacity. */
 #define VECTOR_INIT_CAPACITY 4

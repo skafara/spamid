@@ -12,11 +12,7 @@
 #ifndef CLASSIFIER_H
 #define CLASSIFIER_H
 
-
-#include <stddef.h>
-#include <stdio.h>
-
-#include "hashtable.h"
+#include "structures/hashtable.h"
 
 
 /**

@@ -8,8 +8,8 @@ add_executable(
 
     src/spamid.c
     src/classifier.c
-    src/hashtable.c
-    src/vector.c
-    src/arrays.c
-    src/primes.c
+    src/structures/hashtable.c
+    src/structures/vector.c
+    src/utilities/arrays.c
+    src/utilities/primes.c
 )
