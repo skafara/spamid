@@ -71,7 +71,7 @@ htab_link *htab_link_create(const htab *ht, const char *key, const void *value) 
 void htab_link_free(htab *ht, htab_link *htl) {
     free((void *) htl->key);
     if (ht->item_value_deallocator) {
-        (ht->item_value_deallocator)(&htl->value);
+        (ht->item_value_deallocator)(htl->value);
     }
     free(htl->value);
     free(htl);

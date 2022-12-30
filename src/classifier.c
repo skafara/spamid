@@ -455,14 +455,17 @@ int nbc_classify(const nbc *cl, const char f_path[]) {
     }
     while ((word = f_next_str(fp))) {
         if (!htab_contains(cl->words_prob, word)) {
+            free(word);
             continue;
         }
         if (!htab_get(cl->words_prob, word, &word_prob)) {
+            free(word);
             goto fail;
         }
         for (cls = 0; cls < cl->cls_cnt; cls++) {
             probs[cls] += log10(word_prob[cls]);
         }
+        free(word);
     }
     if (fclose(fp) == EOF) {
         fp = NULL;
