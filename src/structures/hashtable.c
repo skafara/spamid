@@ -17,6 +17,7 @@
 #include "hashtable.h"
 #include "../utilities/arrays.h"
 #include "../utilities/primes.h"
+#include "../utilities/utils.h"
 
 
 /**

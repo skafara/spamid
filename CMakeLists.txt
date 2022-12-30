@@ -12,5 +12,6 @@ add_executable(
     src/structures/vector.c
     src/utilities/arrays.c
     src/utilities/primes.c
+    src/utilities/utils.h
 )
 target_link_libraries(spamid.exe m)
