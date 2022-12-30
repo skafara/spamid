@@ -13,3 +13,4 @@ add_executable(
     src/utilities/arrays.c
     src/utilities/primes.c
 )
+target_link_libraries(spamid.exe m)
