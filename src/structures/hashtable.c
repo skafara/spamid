@@ -36,7 +36,7 @@ htab_link *htab_link_create(const htab *ht, const char *key, const void *value) 
         return NULL;
     }
 
-    new_htl->key = strdup(key);
+    *((char **) &(new_htl->key)) = strdup(key);
     if (!new_htl->key) {
         free(new_htl);
         return NULL;
