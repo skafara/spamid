@@ -16,15 +16,15 @@
 #define PRIMES_H
 
 
-/**< Test case 1: numbers < 2047. */
+/** \brief Test case 1: numbers < 2047. */
 #define P_TEST_N1 2047
-/**< Test case 1: test subset length 1. */
+/** \brief Test case 1: test subset length 1. */
 #define P_TEST_A1_LEN 1
-/**< Test case 2: numbers >= 2047 and < 1373653. */
+/** \brief Test case 2: numbers >= 2047 and < 1373653. */
 #define P_TEST_N2 1373653
-/**< Test case 2: test subset length 2. */
+/** \brief Test case 2: test subset length 2. */
 #define P_TEST_A2_LEN 2
-/**< Test case 3: test subset length for numbers >= 1373653. */
+/** \brief Test case 3: test subset length for numbers >= 1373653. */
 #define P_TEST_R_CNT 8
 
 

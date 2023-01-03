@@ -1,6 +1,6 @@
 /**
  * \file utils.c
- * \brief Functions declared in utils.h are implemented in this file..
+ * \brief Functions declared in utils.h are implemented in this file.
  * \version 1, 30-12-2022
  * \author Stanislav Kafara, skafara@students.zcu.cz
  */

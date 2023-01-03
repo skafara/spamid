@@ -16,9 +16,9 @@
 #define HASHTABLE_H
 
 
-/**< Hashtable default buckets count. */
+/** \brief Hashtable default buckets count. */
 #define H_DEF_BUCKETS_CNT 5
-/**< Hashtable average items count per basket. */
+/** \brief Hashtable average items count per basket. */
 #define H_ITEMS_PER_BUCKET 5
 
 

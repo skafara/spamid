@@ -1,6 +1,6 @@
 /**
  * \file vector.h
- * \brief Header file related to manipulaiton with a vector.
+ * \brief Header file related to manipulation with a vector.
  * \version 1, 28-12-2022
  * \author Stanislav Kafara, skafara@students.zcu.cz
  * 
@@ -28,7 +28,7 @@ typedef void (*vector_item_deallocator)(void **item);
 
 /**
  * \struct vector
- * Struct representing a vector, a dynamically resizable array.
+ * \brief Struct representing a vector, a dynamically resizable array.
  */
 typedef struct vector_ {
     size_t capacity;                            /**< Capacity of the vector. */

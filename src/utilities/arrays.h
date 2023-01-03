@@ -38,6 +38,7 @@ void array_free(void **arr);
 
 /**
  * \brief array_clear Sets the arrays item to 0.
+ * \param arr Array to be cleared.
  * \param item_cnt Array item count.
  * \param item_size Size of an item.
  */
