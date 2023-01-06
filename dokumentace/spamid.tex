@@ -370,6 +370,8 @@ Hash tabulka rozptyluje prvky do pole o~velikosti rovné prvočíslu
 spojových seznamů párů klíče a hodnoty na základě vypočteného hash kódu 
 klíče.
 
+Do hash tabulky se ukládá kopie klíče (řetězce) a kopie hodnoty (ukazatel na libovolný typ nebo přímo libovolná hodnota).
+
 Velikost pole hash tabulky je prvočíselná a dynamická. Pokud nastane 
 situace, že je vkládán nový prvek a počet prvků hash tabulky je roven 
 pětinásobku velikosti pole, velikost pole se zvětší na prvočíslo nejbližší 
@@ -610,8 +612,8 @@ https://www.kiv.zcu.cz/studies/predmety/pc/data/works/sw2022-02-data.zip}
 natrénování klasifikátoru trénovací množinou datových souborů a 
 klasifikace testovaných datových souborů.
 
-Datová množina obsahuje 380 trénovacích datových souborů spamu a hamu a 
-100 testovaných datových souborů spamu a hamu.
+Datová množina obsahuje 380 trénovacích datových souborů třídy spamu ($\approx~\numprint[kB]{741}$, \numprint{113503} slov) a hamu ($\approx~\numprint[kB]{767}$, \numprint{103019} slov) a 
+100 testovaných datových souborů třídy spamu ($\approx~\numprint[kB]{191}$, \numprint{28799} slov) a hamu ($\approx~\numprint[kB]{142}$, \numprint{19500} slov).
 
 Natrénování klasifikátoru průměrně trvalo \numprint[ms]{94.56}, 
 klasifikace testovaných datových souborů spamu \numprint[ms]{11.32} a hamu 
