@@ -604,7 +604,11 @@ Bylo by vhodné problém zezačátku více analyzovat, aby se předešlo nepří
 vhodným programovým řešením jako např. téměř duplicitní hash tabulky 
 klasifikátoru \texttt{words\_cnt} a \texttt{words\_prob}, které by jistě 
 mohli být reprezentovány jednou hash tabulkou obsahující jak počty výskytů 
-řetězce, tak i jeho pravděpodobnosti. Z~důvodu časového nedostatku nebylo 
+řetězce, tak i jeho pravděpodobnosti. Dalším vylepšením programu by mohla
+být více generická hash tabulka dovolující různé datové typy jako klíče,
+generické testování rovnosti klíčů a výpočet hash kódu klíče.
+
+Z~důvodu časového nedostatku a nepotřeby více generické hash tabulky nebylo
 řešení přepracováno.
 
 \section{Testování}
