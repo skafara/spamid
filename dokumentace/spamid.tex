@@ -56,7 +56,7 @@ A21B0160P\\
 \vspace{\baselineskip}
 
 \textbf{Vyučující:}\\
-Kamil Ekštein\\
+Ing. Kamil Ekštein, Ph.D.\\
 \texttt{kekstein@kiv.zcu.cz}
 
 \end{flushleft}
@@ -370,7 +370,8 @@ Hash tabulka rozptyluje prvky do pole o~velikosti rovné prvočíslu
 spojových seznamů párů klíče a hodnoty na základě vypočteného hash kódu 
 klíče.
 
-Do hash tabulky se ukládá kopie klíče (řetězce) a kopie hodnoty (ukazatel na libovolný typ nebo přímo libovolná hodnota).
+Do hash tabulky se ukládá kopie klíče (řetězce) a kopie hodnoty
+(ukazatel na libovolný typ nebo přímo libovolná hodnota).
 
 Velikost pole hash tabulky je prvočíselná a dynamická. Pokud nastane 
 situace, že je vkládán nový prvek a počet prvků hash tabulky je roven 
@@ -403,10 +404,10 @@ klasifikátoru, natrénování klasifikátoru a klasifikaci datových souborů.
 
 \subsection{Deklarace a definice}
 
-Datový typ \texttt{nbc} (obecný naivní Bayesův klasifikátor) je definován 
-jako:
-
-\begin{lstlisting}
+\begin{figure}
+\caption{Definice datového typu nbc (obecný naivní Bayesův klasifikátor)}
+\label{fig:nbc-typedef}
+\begin{lstlisting}[frame=tlrb]
 typedef struct nbc_ {
     const int cls_cnt;
 
@@ -419,8 +420,11 @@ typedef struct nbc_ {
     size_t dict_size;
 } nbc;
 \end{lstlisting}
+\end{figure}
 
-kde \texttt{cls\_cnt} je počet klasifikačních tříd, \texttt{cls\_prob} je 
+Definice datového typu \texttt{nbc} (obecný naivní Bayesův klasifikátor)
+lze vidět na obr. \ref{fig:nbc-typedef}, kde \texttt{cls\_cnt} je počet
+klasifikačních tříd, \texttt{cls\_prob} je 
 pole apriorních pravděpodobností výskytu klasifikační třídy $c_i$
 v~natrénovaných datových souborech $P(c_i)$, \texttt{cls\_words\_cnt} je 
 pole celkových počtů řetězců v~natrénovaných datových souborech patřících 
@@ -612,8 +616,12 @@ https://www.kiv.zcu.cz/studies/predmety/pc/data/works/sw2022-02-data.zip}
 natrénování klasifikátoru trénovací množinou datových souborů a 
 klasifikace testovaných datových souborů.
 
-Datová množina obsahuje 380 trénovacích datových souborů třídy spamu ($\approx~\numprint[kB]{741}$, \numprint{113503} slov) a hamu ($\approx~\numprint[kB]{767}$, \numprint{103019} slov) a 
-100 testovaných datových souborů třídy spamu ($\approx~\numprint[kB]{191}$, \numprint{28799} slov) a hamu ($\approx~\numprint[kB]{142}$, \numprint{19500} slov).
+Datová množina obsahuje 380 trénovacích datových souborů třídy spamu
+($\approx~\numprint[kB]{741}$, \numprint{113503} slov) a hamu
+($\approx~\numprint[kB]{767}$, \numprint{103019} slov) a 
+100 testovaných datových souborů třídy spamu
+($\approx~\numprint[kB]{191}$, \numprint{28799} slov) a hamu
+($\approx~\numprint[kB]{142}$, \numprint{19500} slov).
 
 Natrénování klasifikátoru průměrně trvalo \numprint[ms]{94.56}, 
 klasifikace testovaných datových souborů spamu \numprint[ms]{11.32} a hamu 
