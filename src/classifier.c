@@ -57,6 +57,10 @@ char *f_next_str(FILE *fp) {
         c = fgetc(fp);
     }
 
+    if (!vector_count(v)) {
+        goto fail;
+    }
+
     c = '\x00';
     if (!vector_push_back(v, &c) || !vector_shrink(v)) {
         goto fail;
